@@ -1,26 +1,92 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ─── Custom Theme ───────────────────────────────────────────────── */
+@theme {
+  /* Brand Colors */
+  --color-maroon-50: #fdf2f4;
+  --color-maroon-100: #fce7eb;
+  --color-maroon-200: #f8d0d9;
+  --color-maroon-300: #f2a9ba;
+  --color-maroon-400: #e87794;
+  --color-maroon-500: #d94d73;
+  --color-maroon-600: #c42e5a;
+  --color-maroon-700: #a32146;
+  --color-maroon-800: #881e3d;
+  --color-maroon-900: #6b0f1a;
+  --color-maroon-950: #4a0a12;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-gold-50: #fffbeb;
+  --color-gold-100: #fff3c6;
+  --color-gold-200: #ffe588;
+  --color-gold-300: #ffd14a;
+  --color-gold-400: #ffbc20;
+  --color-gold-500: #f99b07;
+  --color-gold-600: #dd7302;
+  --color-gold-700: #b75006;
+  --color-gold-800: #943d0c;
+  --color-gold-900: #7a330d;
+  --color-gold-950: #461902;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --color-accent-yellow: #ffd700;
+  --color-accent-orange: #ffa500;
+  --color-accent-green: #22c55e;
+
+  /* Typography */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Animations */
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ─── Base Styles ────────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-gray-900 antialiased;
+  }
+}
+
+/* ─── Component Utilities ────────────────────────────────────────── */
+@layer components {
+  .btn-primary {
+    @apply bg-accent-yellow text-maroon-900 px-8 py-4 rounded-full font-bold text-lg
+           hover:bg-white transition-all duration-300 hover:scale-105 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-white/30 text-white px-8 py-4 rounded-full font-bold text-lg
+           hover:border-accent-yellow hover:text-accent-yellow transition-all duration-300;
+  }
+
+  .btn-solid {
+    @apply bg-maroon-900 text-white px-6 py-2.5 rounded-full font-bold text-sm
+           hover:bg-accent-yellow hover:text-maroon-900 transition-colors duration-300;
+  }
+
+  .section-label {
+    @apply text-accent-yellow font-bold text-sm tracking-widest uppercase mb-2;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl font-black text-maroon-900;
+  }
+
+  .card-hover {
+    @apply hover:shadow-2xl transition-all duration-300 hover:-translate-y-2;
+  }
 }
