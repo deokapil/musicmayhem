@@ -1,92 +1,110 @@
 @import "tailwindcss";
 
-/* ─── Custom Theme ───────────────────────────────────────────────── */
 @theme {
-  /* Brand Colors */
-  --color-maroon-50: #fdf2f4;
-  --color-maroon-100: #fce7eb;
-  --color-maroon-200: #f8d0d9;
-  --color-maroon-300: #f2a9ba;
-  --color-maroon-400: #e87794;
-  --color-maroon-500: #d94d73;
-  --color-maroon-600: #c42e5a;
-  --color-maroon-700: #a32146;
-  --color-maroon-800: #881e3d;
-  --color-maroon-900: #6b0f1a;
-  --color-maroon-950: #4a0a12;
+  /* Core palette, lifted from the Music Mayhem banner:
+     wine/maroon stage-left fading into deep indigo stage-right,
+     with a gold marquee accent. */
+  --color-wine-900: #2c0a1c;
+  --color-wine-700: #521a37;
+  --color-wine-500: #6f2247;
 
-  --color-gold-50: #fffbeb;
-  --color-gold-100: #fff3c6;
-  --color-gold-200: #ffe588;
-  --color-gold-300: #ffd14a;
-  --color-gold-400: #ffbc20;
-  --color-gold-500: #f99b07;
-  --color-gold-600: #dd7302;
-  --color-gold-700: #b75006;
-  --color-gold-800: #943d0c;
-  --color-gold-900: #7a330d;
-  --color-gold-950: #461902;
+  --color-indigo-900: #0f0b30;
+  --color-indigo-700: #1b1454;
+  --color-indigo-500: #2c2178;
 
-  --color-accent-yellow: #ffd700;
-  --color-accent-orange: #ffa500;
-  --color-accent-green: #22c55e;
+  --color-gold-400: #f2c868;
+  --color-gold-500: #e3a73e;
+  --color-gold-600: #c88a26;
 
-  /* Typography */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --color-ink-950: #0a0817;
+  --color-ink-900: #120f24;
 
-  /* Animations */
-  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  --animate-float: float 6s ease-in-out infinite;
+  --color-paper: #fbf6ec;
 
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
+  --font-display: var(--font-bricolage), "Arial Black", sans-serif;
+  --font-body: var(--font-plex), system-ui, sans-serif;
+
+  --animate-drift: drift 24s linear infinite;
+  --animate-marquee: marquee 32s linear infinite;
+}
+
+@keyframes drift {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(-40px, 30px, 0) rotate(6deg);
   }
 }
 
-/* ─── Base Styles ────────────────────────────────────────────────── */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-white text-gray-900 antialiased;
+    background-color: var(--color-ink-950);
+    color: var(--color-paper);
+    font-family: var(--font-body);
+  }
+
+  ::selection {
+    background-color: var(--color-gold-500);
+    color: var(--color-ink-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold-400);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-/* ─── Component Utilities ────────────────────────────────────────── */
-@layer components {
-  .btn-primary {
-    @apply bg-accent-yellow text-maroon-900 px-8 py-4 rounded-full font-bold text-lg
-           hover:bg-white transition-all duration-300 hover:scale-105 active:scale-95;
-  }
+@utility text-balance {
+  text-wrap: balance;
+}
 
-  .btn-secondary {
-    @apply border-2 border-white/30 text-white px-8 py-4 rounded-full font-bold text-lg
-           hover:border-accent-yellow hover:text-accent-yellow transition-all duration-300;
-  }
+@utility bg-stage-gradient {
+  background-image: linear-gradient(
+    115deg,
+    var(--color-wine-900) 0%,
+    var(--color-wine-700) 32%,
+    var(--color-indigo-700) 68%,
+    var(--color-indigo-900) 100%
+  );
+}
 
-  .btn-solid {
-    @apply bg-maroon-900 text-white px-6 py-2.5 rounded-full font-bold text-sm
-           hover:bg-accent-yellow hover:text-maroon-900 transition-colors duration-300;
-  }
-
-  .section-label {
-    @apply text-accent-yellow font-bold text-sm tracking-widest uppercase mb-2;
-  }
-
-  .section-title {
-    @apply text-4xl md:text-5xl font-black text-maroon-900;
-  }
-
-  .card-hover {
-    @apply hover:shadow-2xl transition-all duration-300 hover:-translate-y-2;
-  }
+@utility bg-lowpoly {
+  background-image:
+    linear-gradient(
+      160deg,
+      transparent 40%,
+      rgba(227, 167, 62, 0.06) 41%,
+      transparent 42%
+    ),
+    linear-gradient(
+      20deg,
+      transparent 60%,
+      rgba(255, 255, 255, 0.04) 61%,
+      transparent 62%
+    );
 }
