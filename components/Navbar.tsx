@@ -20,11 +20,17 @@ export default function Navbar() {
   return (
     <header
       className={`sticky top-0 z-50 transition-colors duration-300 ${
-        scrolled ? "bg-ink-950/90 backdrop-blur border-b border-white/10" : "bg-transparent"
+        scrolled
+          ? "bg-ink-950/90 backdrop-blur border-b border-white/10"
+          : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+        <Link
+          href="/"
+          className="flex items-center gap-3"
+          onClick={() => setOpen(false)}
+        >
           <LogoMark className="h-9 w-9" />
           <span className="font-display text-lg font-bold tracking-tight text-paper">
             Music Mayhem
